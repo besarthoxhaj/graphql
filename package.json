@@ -1,0 +1,22 @@
+{
+  "name": "graphql-demo",
+  "version": "1.0.0",
+  "description": "GraphQL playground",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "tape test/runner.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-graphql": "^0.4.10",
+    "graphql": "^0.4.18",
+    "tape": "^4.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  }
+}

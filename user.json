@@ -1,0 +1,35 @@
+{
+  "1": {
+    "id": "1",
+    "name": "Bes",
+    "surname": "Hox",
+    "age": 25,
+    "birthday": {
+      "day": 21,
+      "month": 11,
+      "year": 1990
+    }
+  },
+  "2": {
+    "id": "2",
+    "name": "Izaak",
+    "surname": "Rog",
+    "age": 26,
+    "birthday": {
+      "day": 23,
+      "month": 3,
+      "year": 1990
+    }
+  },
+  "3": {
+    "id": "3",
+    "name": "Ale",
+    "surname": "Fav",
+    "age": 36,
+    "birthday": {
+      "day": 15,
+      "month": 8,
+      "year": 1979
+    }
+  }
+}
