@@ -1,6 +1,6 @@
 {
   "1": {
-    "id": "1",
+    "id": 1,
     "name": "Bes",
     "surname": "Hox",
     "age": 25,
@@ -8,10 +8,11 @@
       "day": 21,
       "month": 11,
       "year": 1990
-    }
+    },
+    "friends": [2,3]
   },
   "2": {
-    "id": "2",
+    "id": 2,
     "name": "Izaak",
     "surname": "Rog",
     "age": 26,
@@ -19,10 +20,11 @@
       "day": 23,
       "month": 3,
       "year": 1990
-    }
+    },
+    "friends": [1,3]
   },
   "3": {
-    "id": "3",
+    "id": 3,
     "name": "Ale",
     "surname": "Fav",
     "age": 36,
@@ -30,6 +32,19 @@
       "day": 15,
       "month": 8,
       "year": 1979
-    }
+    },
+    "friends": [1,2]
+  },
+  "4": {
+    "id": 4,
+    "name": "Dan",
+    "surname": "Sofer",
+    "age": 51,
+    "birthday": {
+      "day": 6,
+      "month": 8,
+      "year": 1964
+    },
+    "friends": [1]
   }
 }

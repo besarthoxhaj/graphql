@@ -3,22 +3,13 @@
 var http = require('http');
 
 /**
- *  Parse
- */
-function parse (string) {
-    return string
-      .replace(/#.*\n/g,'') // Comments - 2.1.5
-      .replace(/\s/g,'');
-}
-
-/**
  *
  */
 function request (query,callback) {
 
   http.request({
     port:3000,
-    path:`/graphql?query=${parse(query)}`
+    path:`/graphql?query=${encodeURIComponent(query)}`
   }, function (response) {
 
     var body = undefined;
@@ -34,6 +25,5 @@ function request (query,callback) {
 }
 
 module.exports = {
-  parse: parse,
   request: request
 };
