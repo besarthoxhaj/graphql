@@ -1,47 +1,42 @@
 'use strict';
 
+var util = require('util');
 var graphql = require('graphql');
 var graphqlError = require('graphql/error');
 var graphqlLanguage = require('graphql/language');
-
-/**
- *
- */
-function coerceDate (value) {
-
-  if (!(value instanceof Date)) {
-    // is this how you raise a 'field error'?
-    throw new Error('Field error: value is not an instance of Date');
-  }
-
-  if (isNaN(value.getTime())) {
-    throw new Error('Field error: value is an invalid Date');
-  }
-
-  return value.toJSON();
-}
-
+var Joi = require('joi');
 
 module.exports = new graphql.GraphQLScalarType({
-  name: 'DateTime',
-  serialize: coerceDate,
-  parseValue: coerceDate,
+  name: 'Email',
+  description: 'My first custom type',
+  serialize: function (value) {
+    console.log('serialize:value',value);
+    return value
+  },
+  parseValue: function (value) {
+    console.log('parseValue:value',value);
+    return value
+  },
   parseLiteral: function (ast) {
 
-    if (ast.kind !== graphqlLanguage.Kind.STRING) {
-      throw new graphqlError.GraphQLError('Query error: Can only parse strings to dates but got a: ' + ast.kind, [ast]);
-    }
+    console.log('parseLiteral');
 
-    var result = new Date(ast.value);
+    /*
+     *
+      {
+        kind: 'StringValue',
+        value: 'bes@mail.com',
+        loc: {
+          start: 25,
+          end: 39,
+          source:{
+            body: '{user(email: "bes@mail.com")}',
+            name: 'GraphQL request'
+          }
+        }
+      }
+     */
 
-    if (isNaN(result.getTime())) {
-      throw new graphqlError.GraphQLError('Query error: Invalid date', [ast]);
-    }
-
-    if (ast.value !== result.toJSON()) {
-      throw new graphqlError.GraphQLError('Query error: Invalid date format, only accepts: YYYY-MM-DDTHH:MM:SS.SSSZ', [ast]);
-    }
-
-    return result;
+    return undefined;
   }
 });

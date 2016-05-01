@@ -27,14 +27,20 @@ var userType = new graphql.GraphQLObjectType({
 
 To make it work is important to define `fields` as a function for lazy loading.
 
-### Custom types
-
-
-[### Scalar](http://facebook.github.io/graphql/#sec-Scalars)
+### [Scalar](http://facebook.github.io/graphql/#sec-Scalars)
 In GraphQL the most basic type is a `Scalar`.
 
-[### Introspection](http://facebook.github.io/graphql/#sec-Introspection)
+### Custom types
+> GraphQL provides a number of built‐in scalars, but type systems can add additional scalars with semantic meaning. For example, a GraphQL system could define a scalar called Time which, while serialized as a string, promises to conform to ISO‐8601.
 
+Check:
+  - [graphql-js](https://github.com/graphql/graphql-js/issues/44)
+  - [learning-graphql](https://github.com/mugli/learning-graphql/blob/master/7.%20Deep%20Dive%20into%20GraphQL%20Type%20System.md)
+  - [graphql-type-factory](https://github.com/xpepermint/graphql-type-factory)
+  - [medium article](https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf#.7k1au2x26)
+
+
+### [Introspection](http://facebook.github.io/graphql/#sec-Introspection)
 Checking what an graphql endpoint has to offer.
 
 ### Discoveries
@@ -60,6 +66,10 @@ fetch('url',{
   })
 })
 ```
+
+### [express-graphql](https://github.com/graphql/express-graphql)
+
+Interestingly the spec implementation on express is just a call to the [execute](https://github.com/graphql/express-graphql/blob/master/src/index.js#L208) function of graphql.
 
 ### Resources
 - Nick Schrock - GraphQL Servers [YouTube](https://www.youtube.com/watch?v=KOudxKJXsjc)
