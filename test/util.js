@@ -1,27 +1,39 @@
 'use strict';
 
 var http = require('http');
+require('isomorphic-fetch');
 
 /**
  *
  */
-function request (query,callback) {
+function request (query, body, callback) {
 
-  http.request({
-    port:3000,
-    path:`/graphql?query=${encodeURIComponent(query)}`
-  }, function (response) {
+  if (typeof body === 'function') {
+    callback = body;
+  }
 
-    var body = undefined;
-
-    response.on('data', function (chunk) {
-      body = chunk;
-    });
-
-    response.on('end', function () {
-      callback(undefined,JSON.parse(body));
-    });
-  }).end();
+  fetch(`http://localhost:3000/graphql`,{
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      operationName: undefined,
+      query: query,
+      variables: body
+    })
+  })
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (json) {
+    callback(undefined,json);
+  })
+  .catch(function (error) {
+    console.log('error',error);
+    callback(error,undefined);
+  });
 }
 
 module.exports = {

@@ -27,5 +27,39 @@ var userType = new graphql.GraphQLObjectType({
 
 To make it work is important to define `fields` as a function for lazy loading.
 
+### Custom types
+
+
+[### Scalar](http://facebook.github.io/graphql/#sec-Scalars)
+In GraphQL the most basic type is a `Scalar`.
+
+[### Introspection](http://facebook.github.io/graphql/#sec-Introspection)
+
+Checking what an graphql endpoint has to offer.
+
+### Discoveries
+
+GraphiQL standard does not impose any http verb. However the implementation uses a POST request similar to the example below.
+```js
+fetch('url',{
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    operationName:'myFirstOperation'
+    query:`
+      query myFirstOperation($userId:Int) {
+        user(id: $userId) {
+          name
+        }
+      }
+    `,
+    variables:{userId:1}
+  })
+})
+```
+
 ### Resources
 - Nick Schrock - GraphQL Servers [YouTube](https://www.youtube.com/watch?v=KOudxKJXsjc)

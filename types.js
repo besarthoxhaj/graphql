@@ -33,8 +33,8 @@ var userType = new graphql.GraphQLObjectType({
             type: new graphql.GraphQLEnumType({
               name: 'orderby',
               values: {
-                FIRST_NAME: { value: 'firstName' },
-                LAST_NAME: { value: 'lastName' }
+                FIRST_NAME: { value: 'name' },
+                LAST_NAME: { value: 'surname' }
               }
             })
           }
@@ -42,7 +42,11 @@ var userType = new graphql.GraphQLObjectType({
         resolve: function (source, args, info) {
           return source.friends.map(function (elm) {
             return data.user[elm];
-          }).slice(0,args.first);
+          }).slice(0,args.first).sort(function (a,b) {
+            if (a[args.orderby] < b[args.orderby]) return -1;
+            if (a[args.orderby] > b[args.orderby]) return 1;
+            return 0;
+          });
         }
       },
       comments: {
@@ -62,6 +66,10 @@ var userType = new graphql.GraphQLObjectType({
           	return store;
           },[]);
         }
+      },
+      todos: {
+        name: 'Todos',
+        type: new graphql.GraphQLList(todoType)
       }
     }
   }
@@ -107,6 +115,19 @@ var postType = new graphql.GraphQLObjectType({
       id: { type: graphql.GraphQLInt },
       title: { type: graphql.GraphQLString },
       comments: { type: new graphql.GraphQLList(commentType) },
+      user: { type: userType }
+    }
+  }
+});
+
+var todoType = new graphql.GraphQLObjectType({
+  name: 'Todo',
+  fields: function () {
+    return {
+      id: { type: graphql.GraphQLInt },
+      title: { type: graphql.GraphQLString },
+      comments: { type: new graphql.GraphQLList(commentType) },
+      // deadline: { type:  }
       user: { type: userType }
     }
   }

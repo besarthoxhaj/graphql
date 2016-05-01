@@ -34,25 +34,25 @@ test('2.3:operations -> should default to query', function (t) {
   });
 });
 
-test('2.3:operations -> wrong operation', function (t) {
-
-  util.request(`
-    mutation {
-      user(id: 1) {
-        name
-      }
-    }
-  `, function (error,body) {
-    t.deepEqual(body,{
-      "errors": [
-        {
-          "message": "Can only perform a mutation operation from a POST request."
-        }
-      ]
-    });
-    t.end();
-  });
-});
+// test('2.3:operations -> wrong operation', function (t) {
+//
+//   util.request(`
+//     mutation {
+//       user(id: 1) {
+//         name
+//       }
+//     }
+//   `, function (error,body) {
+//     t.deepEqual(body,{
+//       "errors": [
+//         {
+//           "message": "Can only perform a mutation operation from a POST request."
+//         }
+//       ]
+//     });
+//     t.end();
+//   });
+// });
 
 test('2.4:selection sets', function (t) {
 
@@ -238,24 +238,20 @@ test('2.7:alias', function (t) {
   });
 });
 
-test('2.8:fragments', function (t) {
-  util.request(`query withFragments {
+test('2.8:inline fragments', function (t) {
+  util.request(`query inlineFragmentTyping {
     user(id: 1) {
       name,
-      ...eventFields
-      ...friendFields
-    }
-  }
-
-  fragment eventFields on User {
-    events {
-      title
-    }
-  }
-
-  fragment friendFields on User {
-    friends {
-      name
+      ... on User {
+        events {
+          title
+        }
+      }
+      ... on User {
+        friends(orderby: FIRST_NAME) {
+          name
+        }
+      }
     }
   }`, function (error,body) {
     t.deepEqual(body,{
@@ -269,8 +265,8 @@ test('2.8:fragments', function (t) {
             {"title":"Run a car"}
           ],
           "friends":[
-            {"name":"Izaak"},
-            {"name":"Ale"}
+            {"name":"Ale"},
+            {"name":"Izaak"}
           ]
         }
       }
@@ -279,7 +275,41 @@ test('2.8:fragments', function (t) {
   });
 });
 
-test('2.9:input values', function (t) {
-  t.skip();
-  t.end();
+test('2.10:variable and directives', function (t) {
+  util.request(`
+    query ($userId:Int, $withEvents:Boolean!, $withFriends:Boolean!) {
+      user(id: $userId) {
+        name,
+        events @include(if: $withEvents) {
+        	...eventFragment
+        },
+        ...friendFields @skip(if: $withFriends)
+      }
+    }
+
+    fragment eventFragment on Event {
+      id
+    }
+
+    fragment friendFields on User {
+      friends(orderby: FIRST_NAME) {
+        name
+      }
+    }
+  `
+  ,{userId: 3, withEvents: false, withFriends: false}
+  ,function (error,body) {
+    t.deepEqual(body,{
+      "data":{
+        "user":{
+          "name":"Ale",
+          "friends":[
+            {"name":"Bes"},
+            {"name":"Izaak"}
+          ]
+        }
+      }
+    });
+    t.end();
+  });
 });
