@@ -10,7 +10,7 @@ Check this: https://facebook.github.io/relay/docs/graphql-connections.html#conte
 
 ### Recursion
 
-Is possible of a type to use a filed which type is the same as the parent type. Here an example:
+Is possible of a type to use a filed which type is the same as the parent type. To make it work is important to define `fields` as a function for lazy loading.
 
 ```js
 var userType = new graphql.GraphQLObjectType({
@@ -25,8 +25,6 @@ var userType = new graphql.GraphQLObjectType({
 });
 ```
 
-To make it work is important to define `fields` as a function for lazy loading.
-
 ### [Scalar](http://facebook.github.io/graphql/#sec-Scalars)
 In GraphQL the most basic type is a `Scalar`.
 
@@ -38,7 +36,6 @@ Check:
   - [learning-graphql](https://github.com/mugli/learning-graphql/blob/master/7.%20Deep%20Dive%20into%20GraphQL%20Type%20System.md)
   - [graphql-type-factory](https://github.com/xpepermint/graphql-type-factory)
   - [medium article](https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf#.7k1au2x26)
-
 
 ### [Introspection](http://facebook.github.io/graphql/#sec-Introspection)
 Checking what an graphql endpoint has to offer.

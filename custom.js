@@ -19,24 +19,22 @@ module.exports = new graphql.GraphQLScalarType({
   },
   parseLiteral: function (ast) {
 
-    console.log('parseLiteral');
-
-    /*
-     *
-      {
-        kind: 'StringValue',
-        value: 'bes@mail.com',
-        loc: {
-          start: 25,
-          end: 39,
-          source:{
-            body: '{user(email: "bes@mail.com")}',
-            name: 'GraphQL request'
-          }
+  /*
+   *
+    {
+      kind: 'StringValue',
+      value: 'bes@mail.com',
+      loc: {
+        start: 25,
+        end: 39,
+        source:{
+          body: '{user(email: "bes@mail.com")}',
+          name: 'GraphQL request'
         }
       }
-     */
+    }
+   */
 
-    return undefined;
+    return ast.value;
   }
 });
