@@ -2,11 +2,18 @@
 
 > GraphQL is a query language created by Facebook in 2012 for describing the capabilities and requirements of data models for client‐server applications.
 
-Basically a set of rules described in the [official specification.](http://facebook.github.io/graphql/).
+Basically a set of rules described in the [official specification](http://facebook.github.io/graphql/).
+For the JavaScript reference implementation for GraphQL check the [docs api](http://graphql.org/docs/api-reference-graphql/).
+
+The docs are great! They use [Flow](http://flowtype.org/docs/about-flow.html#_) syntax type system. If you are not familiar check some [examples here](https://github.com/besarthoxhaj/learn-facebook-flow).
+
+### Integrated Development Environment (aka IDE, aka playground)
+
+Run the playground with `npm start`.
 
 ### Pagination or Connection
 
-Check this: https://facebook.github.io/relay/docs/graphql-connections.html#content
+Check this: https://facebook.github.io/relay/docs/graphql-connections.html#content.
 
 ### Recursion
 
@@ -61,7 +68,7 @@ fetch('url',{
     `,
     variables:{userId:1}
   })
-})
+});
 ```
 
 ### [express-graphql](https://github.com/graphql/express-graphql)
@@ -70,3 +77,17 @@ Interestingly the spec implementation on express is just a call to the [execute]
 
 ### Resources
 - Nick Schrock - GraphQL Servers [YouTube](https://www.youtube.com/watch?v=KOudxKJXsjc)
+
+### Example
+
+This is an personal evolving example of things possible with graphql.
+
+```js
+/**
+ * Create a new user
+ * @operation: mutation
+ */
+
+
+
+```

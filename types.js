@@ -138,5 +138,6 @@ module.exports = {
   eventType: eventType,
   likeType: likeType,
   commentType: commentType,
-  postType: postType
+  postType: postType,
+  birthdayType: birthdayType
 };

@@ -1,11 +1,7 @@
 'use strict';
 
-var http = require('http');
-require('isomorphic-fetch');
+var fetch = require('isomorphic-fetch');
 
-/**
- *
- */
 function request (query, body, callback) {
 
   if (typeof body === 'function') {
@@ -13,15 +9,15 @@ function request (query, body, callback) {
   }
 
   fetch(`http://localhost:3000/graphql`,{
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+    method:'POST',
+    headers:{
+      'Accept':'application/json',
+      'Content-Type':'application/json'
     },
-    body: JSON.stringify({
-      operationName: undefined,
-      query: query,
-      variables: body
+    body:JSON.stringify({
+      operationName:undefined,
+      query:query,
+      variables:body
     })
   })
   .then(function (response) {
@@ -37,5 +33,5 @@ function request (query, body, callback) {
 }
 
 module.exports = {
-  request: request
+  request:request
 };

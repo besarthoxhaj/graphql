@@ -32,5 +32,25 @@ module.exports = new graphql.GraphQLSchema({
         }
       };
     }
+  }),
+  mutation: new graphql.GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Mutate data',
+    fields: function () {
+      return {
+        addUser: {
+          type: types.userType,
+          args: {
+            name: { type: graphql.GraphQLString },
+            surname: { type: graphql.GraphQLString },
+            // birthday: { type: types.birthdayType }
+          },
+          resolve: function (source, args, info) {
+            console.log('arguments',arguments);
+            return 'hello';
+          }
+        }
+      };
+    }
   })
 });
