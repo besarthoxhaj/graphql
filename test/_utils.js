@@ -1,8 +1,13 @@
 'use strict';
+/* @flow */
 
 var fetch = require('isomorphic-fetch');
 
-function request (query, body, callback) {
+module.exports = {
+  request:request
+};
+
+function request(query,body,callback) {
 
   if (typeof body === 'function') {
     callback = body;
@@ -19,19 +24,12 @@ function request (query, body, callback) {
       query:query,
       variables:body
     })
-  })
-  .then(function (response) {
+  }).then(response => {
     return response.json();
-  })
-  .then(function (json) {
+  }).then(json => {
     callback(undefined,json);
-  })
-  .catch(function (error) {
+  }).catch(error => {
     console.log('error',error);
     callback(error,undefined);
   });
 }
-
-module.exports = {
-  request:request
-};

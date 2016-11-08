@@ -7,17 +7,17 @@ var graphqlLanguage = require('graphql/language');
 var Joi = require('joi');
 
 module.exports = new graphql.GraphQLScalarType({
-  name: 'Email',
-  description: 'My first custom type',
-  serialize: function (value) {
+  name:'Email',
+  description:'My first custom type',
+  serialize:(value) => {
     console.log('serialize:value',value);
     return value
   },
-  parseValue: function (value) {
+  parseValue:(value) => {
     console.log('parseValue:value',value);
     return value
   },
-  parseLiteral: function (ast) {
+  parseLiteral:(ast) => {
 
   /*
    *

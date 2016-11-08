@@ -1,0 +1,86 @@
+'use strict';
+/* @flow */
+
+var test = require('tape');
+var GraphQL = require('graphql');
+
+test('TTD: bare minimum to run a query schema', t => {
+
+  console.log('GraphQL',GraphQL);
+
+  var schema = new GraphQL.GraphQLSchema({
+    query: new GraphQL.GraphQLObjectType({
+      name:'User',
+      fields:() => ({name:{type:GraphQL.GraphQLString}})
+    })
+  });
+
+  t.test('go get my schema', st => {
+    st.equal(
+      GraphQL.printSchema(schema),
+      'type User {\n  name: String\n}\n',
+      'got schema'
+    );
+    st.end();
+  });
+
+  t.test('wrong query', st => {
+
+    st.plan(14);
+
+    function promiseSuccess(errorMess) {
+      return function({errors}) {
+        st.equal(errors.length,1,'got one error');
+        st.ok(errors[0] instanceof GraphQL.GraphQLError,'got a GraphQLError');
+        // node the column = 2 refers to `h` in `{hello}`
+        st.deepEqual(GraphQL.formatError(errors[0]).message,errorMess,'got error parsed');
+      }
+    }
+
+      function promiseError(error) {
+        // never get called :-( cause the implementation
+        // does never reject https://github.com/graphql/graphql-js/blob/master/src/graphql.js#L70
+        st.fail();
+      }
+
+      [{
+        query:'query {hello}',
+        errorMess:'Cannot query field "hello" on type "User".'
+      },{
+        query:'{hello}',
+        errorMess:'Cannot query field "hello" on type "User".'
+      },{
+        query:'mutation {hello}',
+        errorMess:'Schema is not configured for mutations'
+      },{
+        query:'query { Event { name } }',
+        errorMess:'Cannot query field "Event" on type "User".'
+      },{
+        query:'Event { hello }',
+        errorMess:'Syntax Error GraphQL request (1:1) Unexpected Name "Event"\n\n1: Event { hello }\n   ^\n'
+      }].forEach(elm => {
+        GraphQL.graphql(schema,elm.query).then(promiseSuccess(elm.errorMess),promiseError);
+      });
+  });
+
+  // t.test('non existing fields', st => {
+  //
+  //   function promiseSuccess(res) {
+  //     console.log('res',res);
+  //     // st.deepEqual(res,{data:{name:null}},'got res');
+  //     st.end();
+  //   }
+  //
+  //   GraphQL.graphql(schema,'event { hello }').then(promiseSuccess);
+  // });
+
+  t.test('right query', st => {
+
+    function promiseSuccess(res) {
+      st.deepEqual(res,{data:{name:null}},'got res');
+      st.end();
+    }
+
+    GraphQL.graphql(schema,'{name}').then(promiseSuccess);
+  });
+});

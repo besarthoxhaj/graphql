@@ -1,10 +1,9 @@
 'use strict';
 
 var test = require('tape');
-var http = require('http');
-var util = require('./util.js');
+var util = require('./_util.js');
 
-test('2.1:language -> comments should be ignored', function (t) {
+test('2.1:language -> comments should be ignored', t => {
 
   util.request(`
     query {
@@ -14,13 +13,13 @@ test('2.1:language -> comments should be ignored', function (t) {
         name
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.ok(body['data'],'got datas');
     t.end();
   });
 });
 
-test('2.3:operations -> should default to query', function (t) {
+test('2.3:operations -> should default to query', t => {
 
   util.request(`
     {
@@ -28,7 +27,7 @@ test('2.3:operations -> should default to query', function (t) {
         name
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.ok(body['data'],'got datas');
     t.end();
   });
@@ -54,7 +53,7 @@ test('2.3:operations -> should default to query', function (t) {
 //   });
 // });
 
-test('2.4:selection sets', function (t) {
+test('2.4:selection sets', t => {
 
   util.request(`
     {
@@ -68,7 +67,7 @@ test('2.4:selection sets', function (t) {
         }
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.deepEqual(body,{
       data: {
         user: {
@@ -86,7 +85,7 @@ test('2.4:selection sets', function (t) {
   });
 });
 
-test('2.4:selection sets -> let\'s got a bit crazy', function (t) {
+test('2.4:selection sets -> let\'s got a bit crazy', t => {
 
   util.request(`
     {
@@ -101,7 +100,7 @@ test('2.4:selection sets -> let\'s got a bit crazy', function (t) {
         }
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.deepEqual(body,{
       "data":{
         "user":{
@@ -130,7 +129,7 @@ test('2.4:selection sets -> let\'s got a bit crazy', function (t) {
   });
 });
 
-test('2.4:selection sets -> sort of joins', function (t) {
+test('2.4:selection sets -> sort of joins', t => {
 
   util.request(`
     {
@@ -142,7 +141,7 @@ test('2.4:selection sets -> sort of joins', function (t) {
         }
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.deepEqual(body,{
       "data":{
         "user":{
@@ -161,7 +160,7 @@ test('2.4:selection sets -> sort of joins', function (t) {
   });
 });
 
-test('2.4:selection sets -> sort of pagination', function (t) {
+test('2.4:selection sets -> sort of pagination', t => {
 
   util.request(`
     {
@@ -173,7 +172,7 @@ test('2.4:selection sets -> sort of pagination', function (t) {
         }
       }
     }
-  `, function (error,body) {
+  `, (error,body) => {
     t.deepEqual(body,{
       "data":{
         "user":{
@@ -189,12 +188,12 @@ test('2.4:selection sets -> sort of pagination', function (t) {
   });
 });
 
-test('2.6:argument', function (t) {
+test('2.6:argument', t => {
   t.skip();
   t.end();
 });
 
-test('2.6:arguments', function (t) {
+test('2.6:arguments', t => {
 
   util.request(`
     {
@@ -218,7 +217,7 @@ test('2.6:arguments', function (t) {
   });
 });
 
-test('2.7:alias', function (t) {
+test('2.7:alias', t => {
 
   util.request(`
     {
@@ -238,7 +237,7 @@ test('2.7:alias', function (t) {
   });
 });
 
-test('2.8:inline fragments', function (t) {
+test('2.8:inline fragments', t => {
   util.request(`query inlineFragmentTyping {
     user(id: 1) {
       name,
@@ -253,7 +252,7 @@ test('2.8:inline fragments', function (t) {
         }
       }
     }
-  }`, function (error,body) {
+  }`, (error,body) => {
     t.deepEqual(body,{
       "data":{
         "user":{
@@ -275,7 +274,7 @@ test('2.8:inline fragments', function (t) {
   });
 });
 
-test('2.10:variable and directives', function (t) {
+test('2.10:variable and directives', t => {
   util.request(`
     query ($userId:Int, $withEvents:Boolean!, $withFriends:Boolean!) {
       user(id: $userId) {
@@ -296,9 +295,9 @@ test('2.10:variable and directives', function (t) {
         name
       }
     }
-  `
-  ,{userId: 3, withEvents: false, withFriends: false}
-  ,function (error,body) {
+  `,
+  {userId: 3, withEvents: false, withFriends: false},
+  (error,body) => {
     t.deepEqual(body,{
       "data":{
         "user":{

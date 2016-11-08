@@ -12,10 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4",
-    "express-graphql": "^0.4.10",
-    "graphql": "^0.4.18",
+    "express-graphql": "^0.5.4",
+    "graphql": "^0.7.2",
     "isomorphic-fetch": "^2.2.1",
-    "joi": "^8.0.5",
+    "joi": "^9.2.0",
     "tape": "^4.5.1"
   },
   "devDependencies": {
